@@ -55,7 +55,7 @@ function parseQuery(raw) {
 }
 
 function score(c, q) {
-  const text = c.text.toLowerCase(), tag = c.tag.toLowerCase();
+  const text = c.text.toLowerCase(), tag = c.tag.toLowerCase().replace(/-/g, ' ');
   for (const t of q.tags) if (!tag.startsWith(t) && !tag.includes(' ' + t)) return -1;
   let s = 0;
   for (const w of q.words) {
@@ -151,7 +151,7 @@ function renderChips(q, kind) {
   const active = q.tags[0];
   $('#chips').innerHTML = [...counts].sort((a, b) => b[1] - a[1]).map(([t]) => {
     const n = live().filter(c => c.tag === t && (!kind || c.kind === kind)).length;
-    return `<button class="chip${active && t.startsWith(active) ? ' on' : ''}" data-tag="${esc(t)}">${esc(t)}<i>${n}</i></button>`;
+    return `<button class="chip${active && t.replace(/-/g, ' ').startsWith(active) ? ' on' : ''}" data-tag="${esc(t)}">${esc(t)}<i>${n}</i></button>`;
   }).join('');
 }
 
