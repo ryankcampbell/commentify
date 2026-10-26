@@ -1,0 +1,13 @@
+# Student-derived data stays out of the public repo — it syncs to the private commentify-data repo.
+comments.json
+*.db
+
+# Old versions, kept locally only
+v1_backup/
+commentify_oldtkinterversion/
+
+.claude/
+__pycache__/
+*.pyc
+.DS_Store
+.env

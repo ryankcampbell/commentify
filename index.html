@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Commentify</title>
+<meta name="theme-color" content="#4f46e5">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="searchrow">
+    <input id="q" type="search" placeholder="Search…  (+ / − prefix, #tag)" autocomplete="off" spellcheck="false" autofocus>
+    <button id="gear" class="icon" title="Settings &amp; sync"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+  </div>
+  <div class="filterrow">
+    <div class="seg" id="seg">
+      <button data-f="all" class="on">All</button>
+      <button data-f="+">+ Going well</button>
+      <button data-f="-">− Improve</button>
+    </div>
+    <button id="sync" class="pill" title="Sync not set up — click ⚙">local</button>
+  </div>
+  <div id="chips" class="chips"></div>
+</header>
+
+<main id="list" tabindex="-1"></main>
+
+<section id="cart">
+  <div id="cartbody"></div>
+  <div class="cartbar">
+    <button id="copy" class="primary">Copy <kbd>⌘↵</kbd></button>
+    <button id="wipe">New student <kbd>Esc</kbd></button>
+    <button id="help" class="icon" title="Hotkeys">?</button>
+  </div>
+</section>
+
+<div id="toast" hidden></div>
+
+<dialog id="settings">
+  <form method="dialog">
+    <h2>GitHub sync</h2>
+    <p class="muted">Comments live in a private repo so every device stays in sync. Use a fine-grained token with <b>Contents: read &amp; write</b> on that repo only.</p>
+    <label>Repo <input name="repo" placeholder="your-github-name/commentify-data"></label>
+    <label>File <input name="path" placeholder="comments.json"></label>
+    <label>Token <input name="token" type="password" placeholder="github_pat_…" autocomplete="off"></label>
+    <div class="row">
+      <button type="button" id="savesync" class="primary">Save &amp; sync</button>
+      <button value="cancel">Close</button>
+    </div>
+    <h2>Backup</h2>
+    <div class="row">
+      <button type="button" id="export">Export JSON</button>
+      <label class="filebtn">Import JSON<input type="file" id="import" accept=".json,application/json" hidden></label>
+    </div>
+    <h2>Copy format</h2>
+    <label>Strengths heading <input name="hplus"></label>
+    <label>Growth heading <input name="hminus"></label>
+    <label>Bullet (plain text) <input name="bullet" class="short"></label>
+    <label class="check"><input type="checkbox" name="rich"> Rich paste: bold headings + • bullets on separate lines (plain text is always included as fallback)</label>
+  </form>
+</dialog>
+
+<dialog id="keys">
+  <form method="dialog">
+    <h2>Hotkeys</h2>
+    <table>
+      <tr><td><kbd>type</kbd></td><td>search (words in any order)</td></tr>
+      <tr><td><kbd>+ foo</kbd> / <kbd>- foo</kbd></td><td>only going well / only improve</td></tr>
+      <tr><td><kbd>#focus</kbd></td><td>match tag</td></tr>
+      <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>move</td></tr>
+      <tr><td><kbd>↵</kbd></td><td>add / remove highlighted, clear search</td></tr>
+      <tr><td><kbd>⇧↵</kbd></td><td>add, keep search</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>cycle All / + / −</td></tr>
+      <tr><td><kbd>⌘↵</kbd></td><td>copy formatted comments</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>clear search → collapse “show all” → new student</td></tr>
+      <tr><td><kbd>⌘Z</kbd></td><td>undo new student (empty search)</td></tr>
+      <tr><td><kbd>⌘E</kbd></td><td>edit highlighted bank comment</td></tr>
+      <tr><td><kbd>⌘V</kbd></td><td>paste an old comment (multi-line) to reload it for editing</td></tr>
+    </table>
+    <p class="muted">No match? The last rows add what you typed as a new comment. Put <kbd>#tag</kbd> in it to tag it. Click any checkout text to tweak it for this student; <b>save</b> keeps the tweak as a new bank comment.</p>
+    <div class="row"><button class="primary">Got it</button></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
