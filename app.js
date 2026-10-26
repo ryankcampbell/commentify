@@ -41,7 +41,7 @@ bank = normalize(bank);
 
 function parseQuery(raw) {
   let s = raw.trim(), kind = null;
-  const m = s.match(/^([+\-−])\s*/);
+  const m = s.match(/^([+\-−–—])\s*/);
   if (m) { kind = m[1] === '+' ? '+' : '-'; s = s.slice(m[0].length); }
   const tags = [], words = [];
   for (const w of s.toLowerCase().split(/\s+/).filter(Boolean)) {
@@ -183,6 +183,7 @@ function renderCart() {
         <span class="b">${esc(cfg.bullet)}</span>
         <span class="t" contenteditable="plaintext-only" spellcheck="true">${esc(c.text)}</span>
         ${c.text !== c.orig ? `<button class="save" data-csave="${i}" title="Save this wording to the bank">save</button>` : ''}
+        <button class="flip" data-cf="${i}" title="Move to ${k === '+' ? esc(cfg.hminus) : esc(cfg.hplus)} (also refiles it in the bank)">⇄</button>
         <button class="x" data-cx="${i}" title="Remove">✕</button>
       </div>`;
     }
@@ -355,7 +356,7 @@ $('#chips').addEventListener('click', e => {
   const t = e.target.closest('[data-tag]')?.dataset.tag;
   if (!t) return;
   const q = $('#q'), tok = '#' + t.replace(/ /g, '-');
-  const prefix = (q.value.match(/^\s*[+\-−]\s*/) || [''])[0];
+  const prefix = (q.value.match(/^\s*[+\-−–—]\s*/) || [''])[0];
   // toggle: clicking the active chip clears it; otherwise it replaces any #tag in the search
   const rest = q.value.slice(prefix.length).replace(/(^|\s)#\S+/g, '').trim();
   const on = e.target.closest('.chip').classList.contains('on');
@@ -400,6 +401,13 @@ $('#cartbody').addEventListener('focusout', () => setTimeout(renderCart));
 $('#cartbody').addEventListener('click', e => {
   const t = e.target;
   if (t.dataset.cx) { cart.splice(+t.dataset.cx, 1); saveCart(); render(); $('#q').focus(); }
+  if (t.dataset.cf) {
+    const c = cart[+t.dataset.cf], b = byId(c.id);
+    c.kind = c.kind === '+' ? '-' : '+';
+    if (b && b.kind !== c.kind) { b.kind = c.kind; touch(b); }
+    saveCart(); render(); $('#q').focus();
+    toast(`Moved to ${c.kind === '+' ? cfg.hplus : cfg.hminus}`);
+  }
   if (t.dataset.csave) {
     const c = cart[+t.dataset.csave], src = byId(c.id);
     const n = { id: newId(), kind: c.kind, tag: src?.tag || '', text: c.text.trim(), uses: 0, t: Date.now() };

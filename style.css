@@ -163,8 +163,9 @@ mark { background: none; color: var(--accent); font-weight: 600; }
 .ci .b { flex: none; color: var(--muted); }
 .ci .t { flex: 1; min-width: 0; padding: 2px 4px; border-radius: 4px; outline: none; }
 .ci .t:focus { background: var(--accent-soft); }
-.ci .x, .ci .save { flex: none; border: 0; background: none; padding: 0 4px; color: var(--muted); font-size: 12px; }
+.ci .x, .ci .save, .ci .flip { flex: none; border: 0; background: none; padding: 0 4px; color: var(--muted); font-size: 12px; }
 .ci .x:hover { color: var(--minus); }
+.ci .flip:hover { color: var(--accent); }
 .ci .save { color: var(--accent); }
 .cartbar { display: flex; gap: 8px; padding: 8px 12px 10px; }
 .cartbar .primary { flex: 1; }
