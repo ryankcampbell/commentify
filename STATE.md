@@ -10,9 +10,14 @@ _Updated 2026-10-28_
 Write every report card comment this term with Commentify, on time, and make it easy to share with colleagues.
 
 ## Key dates
-| Date | What |
-|---|---|
-| TBD | Report card comment deadlines for each grading period. The hub fills these in from the school calendar. |
+Source: NWA Staff Events Calendar. Comments are due by 6 pm on the due date.
+
+| Due | What | Grading day |
+|---|---|---|
+| **2026-10-29, 6 pm** | Fall mid-semester progress reports | 2026-10-26 |
+| **2027-01-21, 6 pm** | Fall report cards | 2027-01-15 |
+| **2027-04-15, 6 pm** | Spring mid-semester progress reports | 2027-04-09 |
+| **2027-06-16, 6 pm** | Spring report cards | 2027-06-10 |
 
 ## In flight
 - Nothing.
@@ -22,12 +27,15 @@ Write every report card comment this term with Commentify, on time, and make it 
 2. **Retire the old versions:** move `v1_backup/` and `commentify_oldtkinterversion/` to `NWA/V. Old/`. First find and update every file that names their paths. Ryan approved this "now-ish". Do it in its own session.
 
 ## Must not drift
-- **Report card comment deadlines.** Once the dates are in Key dates, never let one pass unnoticed. Flag any deadline within 2 weeks to the hub.
+- **Report card comment deadlines (6 pm each).** Flag any deadline within 2 weeks to the hub.
+  - 2026-10-29: Fall mid-semester progress reports (**tomorrow**)
+  - 2027-01-21: Fall report cards
+  - 2027-04-15: Spring mid-semester progress reports
+  - 2027-06-16: Spring report cards
 - The public repo never contains bank data, a token or a student name (see CLAUDE.md → Public repo safety).
 
 ## Done means
 This term's comments are all submitted in the portal on time, and the bank is synced to `commentify-data` and backed up with ⚙ → Export JSON.
 
 ## Open questions
-- What are this year's comment deadlines? (Hub to fill in from the school calendar.)
 - For sharing: export from Ryan's bank as-is, or curate a smaller starter bank first?
