@@ -12,7 +12,7 @@ Install it so it opens in its own window like any other app:
 
 ## 2. Load the starter bank
 
-1. Download Ryan's starter file: [starter file](LINK) (`commentify-starter-comments.json`).
+1. Download Ryan's starter file, `commentify-starter-comments.json`, from the department Drive folder **Activities & Resources → Commentify**.
 2. In Commentify, click **⚙** (top right), then **Import JSON**, and choose the file.
 
 You now have Ryan's comments to start from.
